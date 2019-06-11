@@ -1,0 +1,8 @@
+name: multiply
+env: python
+resources:
+   cpu: 0.5
+   mem: 512Mi
+code:
+   path: multiply.tar.gz
+   entryPoint: multiply.py

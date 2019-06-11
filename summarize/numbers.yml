@@ -1,0 +1,18 @@
+name: numbers
+nodes:
+- nodeName: Range
+  algorithmName: range
+  input:
+  - "@flowInput.data"
+- nodeName: Multiply
+  algorithmName: multiply
+  input:
+  - "#@Range"
+  - "@flowInput.mul" 
+- nodeName: Reduce
+  algorithmName: reduce
+  input:
+  - "@Multiply"
+flowInput:
+  data: 5
+  mul: 2

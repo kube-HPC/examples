@@ -1,0 +1,8 @@
+name: reduce
+env: nodejs
+resources:
+   cpu: 0.5
+   mem: 512Mi
+code:
+   path: reduce.tar.gz
+   entryPoint: reduce.js

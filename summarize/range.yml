@@ -1,0 +1,8 @@
+name: range
+env: python
+resources:
+   cpu: 0.5
+   mem: 512Mi
+code:
+   path: range.tar.gz
+   entryPoint: range.py
