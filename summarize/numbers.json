@@ -1,0 +1,34 @@
+{
+    "name": "numbers-test",
+    "flowInput": {
+        "data": 5,
+        "mul": 2
+    },
+    "nodes": [
+        {
+            "nodeName": "range",
+            "algorithmName": "range",
+            "input": [
+                "@flowInput.data"
+            ]
+        },     
+        {
+            "nodeName": "multiply",
+            "algorithmName": "multiply3",
+
+            "input": [
+                "#@range",
+                "@flowInput.mul"
+            ]
+        },
+        {
+            "nodeName": "reduce",
+            "algorithmName": "reduce7",
+           
+            "input": [
+                "@multiply"
+            ]
+        }
+    ]
+    
+}
