@@ -1,0 +1,23 @@
+{
+    "name": "empty",
+    "cpu": 1,
+    "gpu": 0,
+    "mem": "256Mi",
+    "reservedMemory": "512Mi",
+    "minHotWorkers": 0,
+    "algorithmImage": "hkube/algorithm-example-python",
+    "type": "Image",
+    "options": {
+        "pending": false
+    },
+    "version": "c5lgfk4n02",
+    "created": 1653374391954,
+    "modified": 1653374502442,
+    "mounts": [
+        {
+            "volumeType": "emptyDir",
+            "path": "/data",
+            "pvcName": "stam"
+        }
+    ]
+}
