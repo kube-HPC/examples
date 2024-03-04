@@ -11,7 +11,6 @@ def start(args, hkube_api):
     if args['input']:
         if type(args['input'][0]) is dict and 'process_time' in args['input'][0]:
             process_time = args['input'][0]['process_time']
-    print("process time: " + str(process_time))
     msg = args.get('streamInput')['message']
     global numberOfMsg
     global sum
@@ -23,7 +22,7 @@ def start(args, hkube_api):
     fromStart = msg["time" + str(msg['node'])] - msg["time1"]
     sumFromStart += fromStart
     sum += deltaFromPrev
-    if numberOfMsg % 500 == 1:
+    if numberOfMsg % 40 == 1:
         print("Avg from prev node " + str(sum / numberOfMsg))
         print("Avg from start node " + str(sumFromStart / numberOfMsg))
     time.sleep(float(process_time))

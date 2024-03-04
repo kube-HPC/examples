@@ -10,9 +10,10 @@ childs =[]
 def start(args, hkube_api):
     print("~~~~~~~~~starts~~~~~~~~~~~~updated")
     process_time = 0.0001
-    if args['input']:
-        if type(args['input'][0]) is dict and 'process_time' in args['input'][0]:
-            process_time = args['input'][0]['process_time']
+    # if args['input']:
+    #     if type(args['input'][0]) is dict and 'process_time' in args['input'][0]:
+    #         process_time = args['input'][0]['process_time']
+    print("no process at all")
     print("process time: " + str(process_time))
 
 
@@ -29,9 +30,9 @@ def start(args, hkube_api):
         sumFromStart += fromStart
         sum += deltaFromPrev
         global childs
-        time.sleep(float(process_time))
-        if origin == 'stateless':
-            time.sleep(0.01)
+        # time.sleep(float(process_time))
+        # if origin == 'stateless':
+        #     time.sleep(0.01)
         if (childs):
             hkube_api.sendMessage(msg)
     hkube_api.registerInputListener(onMessage=handleMessage)
