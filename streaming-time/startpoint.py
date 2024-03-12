@@ -1,11 +1,17 @@
 from __future__ import print_function, division, absolute_import
 
+from hkube_python_wrapper import Algorunner
+
+from sender import SenderThread
 import time
+
 global numberOfMsg
 numberOfMsg = 0
 sum = 0
 active = True
 sumFromStart = 0
+
+
 def start(args, hkube_api):
     i = 0
     sent = 0
@@ -15,6 +21,7 @@ def start(args, hkube_api):
     size = 7000
 
     print("~~~~~~~~~starts~~~~~~~~~~~~updated")
+
     def handleMessage(msg, origin):
         global numberOfMsg
         global sum
@@ -34,45 +41,47 @@ def start(args, hkube_api):
 
     flows = None
     if args['input']:
-        if type(args['input'][0]) is dict and 'process_time' in args['input'][0]:
-            process_time = args['input'][0]['process_time']
-        if type(args['input'][0]) is dict and 'rate' in args['input'][0]:
-            rate = args['input'][0]['rate']
-        if type(args['input'][0]) is dict and 'size' in args['input'][0]:
-            size = args['input'][0]['size']
-        if type(args['input'][0]) is dict and 'flows' in args['input'][0]:
-            flows = args['input'][0]['flows']
+        if len(args['input']) > 0 and isinstance(args['input'][0],dict) and args['input'][0].get("flows") is not None:
+            print("has flows")
+            for flow in args['input'][0]['flows']:
+                sender = SenderThread(hkube_api=hkube_api, flow=flow["name"], program=flow["program"])
+                sender.start()
+            else:
+                print("no flows" + str(args["input"][0]))
+                if type(args['input'][0]) is dict and 'process_time' in args['input'][0]:
+                    process_time = args['input'][0]['process_time']
+                if type(args['input'][0]) is dict and 'rate' in args['input'][0]:
+                    rate = args['input'][0]['rate']
+                if type(args['input'][0]) is dict and 'size' in args['input'][0]:
+                    size = args['input'][0]['size']
+                sender = SenderThread(hkube_api=hkube_api, flow=None, program=[{"rate": rate, "size": size, "time": 120}])
+                sender.start()
 
 
-    print("Demonstrating ein 0.25")
-    print("rate is: " + str(rate))
+
     print("process time: " + str(process_time))
     myimage = bytearray(size)
+
     while True:
-        for _ in range(0, rate/4):
-            if active:
-                msg = {"image": myimage,
-                       "node": 1,
-                       "id": str(sent),
-                       "time1": time.time()
-                       }
-                sent += 1
-                if (flows is not None):
-                    for flow in flows:
-                        hkube_api.sendMessage(msg,flow)
-                else:
-                    hkube_api.sendMessage(msg)
         i = i + 1
-        if i % 20 == 0:
+        if i % 80 == 0:
             global numberOfMsg
             if numberOfMsg > 0:
                 print("Avg from prev node " + str(sum / numberOfMsg))
                 print("Avg from start node " + str(sumFromStart / numberOfMsg))
         time.sleep(0.25)
-    time.sleep(600)
-
 
 
 def stop(a):
     print("at stop")
 
+def main():
+    print("starting algorithm runner")
+    print(str(Algorunner))
+
+    Algorunner.Debug('ws://cd.hkube.io/hkube/debug/return-range', start=start)
+    # Algorunner.Run(start=start, init=init)
+
+
+if __name__ == "__main__":
+    main()
