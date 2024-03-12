@@ -1,0 +1,26 @@
+{
+    "env": "python",
+    "options": {
+        "pending": false,
+        "devMode": true
+    },
+    "name": "stateless-time-statistics",
+    "entryPoint": "statelessGetSendTime.py",
+    "userInfo": {
+        "platform": "linux",
+        "hostname": "T-P-GOLANHA-LW",
+        "username": "golanha"
+    },
+    "cpu": 0.1,
+    "mem": "256Mi",
+    "minHotWorkers": 0,
+    "algorithmImage": "docker.io/hkubedevtest/start-streaming:v74y48k2e",
+    "type": "Image",
+    "reservedMemory": "52Mi",
+    "version": "kha4qi2dmy",
+    "created": 1704292766504,
+    "modified": 1709449649861,
+    "workerEnv": {
+        "INACTIVE_WORKER_TIMEOUT_MS": 5000
+    }
+}

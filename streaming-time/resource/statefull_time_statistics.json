@@ -1,0 +1,27 @@
+{
+    "env": "python",
+    "options": {
+        "pending": false,
+        "devMode": true,
+        "devFolder": "/usr/local/lib/python3.7/site-packages/hkube_python_wrapper/"
+    },
+    "name": "statefull-time-statistics",
+    "entryPoint": "statefullGetSendTime.py",
+    "userInfo": {
+        "platform": "linux",
+        "hostname": "T-P-GOLANHA-LW",
+        "username": "golanha"
+    },
+    "cpu": 0.1,
+    "mem": "256Mi",
+    "minHotWorkers": 0,
+    "algorithmImage": "docker.io/hkubedevtest/start-streaming:v74y48k2e",
+    "type": "Image",
+    "reservedMemory": "52Mi",
+    "version": "zkfyrryh5k",
+    "created": 1704292714806,
+    "modified": 1709730296774,
+    "workerEnv": {
+        "INACTIVE_WORKER_TIMEOUT_MS": 5000
+    }
+}

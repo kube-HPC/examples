@@ -1,0 +1,32 @@
+{
+    "env": "python",
+    "options": {
+        "devMode": true,
+        "pending": false
+    },
+    "name": "start-streaming",
+    "entryPoint": "startpoint.py",
+    "userInfo": {
+        "platform": "linux",
+        "hostname": "T-P-GOLANHA-LW",
+        "username": "golanha"
+    },
+    "type": "Code",
+    "cpu": 0.5,
+    "mem": "1Gi",
+    "minHotWorkers": 0,
+    "fileInfo": {
+        "fileExt": "zip",
+        "checksum": "95fab187576142e255e55cf45d2b5cb313f7c7a9",
+        "fileSize": 2607,
+        "path": "cicd-hkube-builds/start-streaming-xs9s8k"
+    },
+    "algorithmImage": "docker.io/hkubedevtest/start-streaming:v74y48k2e",
+    "version": "f31wxu3plr",
+    "created": 1704292544201,
+    "modified": 1709730273842,
+    "workerEnv": {
+        "INACTIVE_WORKER_TIMEOUT_MS": 1000
+    },
+    "reservedMemory": "52Mi"
+}

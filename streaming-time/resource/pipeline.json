@@ -1,0 +1,925 @@
+{
+    "name": "ein",
+    "kind": "stream",
+    "streaming": {
+        "flows": {
+            "hkube_desc": "sen-1 & sen-2 & sen-3 & sen-4 & sen-5>> dete-man>> ag-man>>et-ma-2|ag-man>>aga-al>>et-ma-4|aga-al>>req-man>>et-ma-5|req-man>>sen-out-1&sen-out-2&sen-out-3&sen-out-4&sen-out-5&et-ma-4|syn-man>>iku-man&et-ma-8|iku-man>>iku-al&et-ma-6|iku-al>>et-ma-7&et-kaf",
+            "hkube_nav": "sen-1 & sen-2 & sen-3 & sen-4 & sen-5>>navi>>ag-man&iku-man&et-ma-3 ",
+            "hkube_t_res": "sen-1 & sen-2 & sen-3 & sen-4 & sen-5>>syn-man",
+            "et_f": "sen-1 & sen-2 & sen-3 & sen-4 & sen-5 >>et-ma-1"
+        },
+        "defaultFlow": "hkube_desc"
+    },
+    "webhooks": {},
+    "triggers": {
+        "cron": {
+            "enabled": false,
+            "pattern": "0 * * * *"
+        },
+        "pipelines": []
+    },
+    "options": {
+        "batchTolerance": 80,
+        "concurrentPipelines": {
+            "amount": 10,
+            "rejectOnFailure": true
+        },
+        "ttl": 3600,
+        "progressVerbosityLevel": "info"
+    },
+    "priority": 3,
+    "nodes": [
+        {
+            "kind": "algorithm",
+            "stateType": "stateful",
+            "nodeName": "sen-1",
+            "algorithmName": "start-streaming",
+            "input": [
+                {
+                    "flows": [
+                        {
+                            "name": "hkube_desc",
+                            "program": [
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                }
+                            ]
+                        },
+                        {
+                            "name": "hkube_t_res",
+                            "program": [
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                }
+                            ]
+                        },
+                        {
+                            "name": "hkube_nav",
+                            "program": [
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                }
+                            ]
+                        },
+                        {
+                            "name": "et_f",
+                            "program": [
+                                {
+                                    "rate": 10,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 0,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 10,
+                                    "time": 120,
+                                    "size": 80
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        },
+        {
+            "kind": "algorithm",
+            "stateType": "stateful",
+            "nodeName": "sen-2",
+            "algorithmName": "start-streaming",
+            "input": [
+                {
+                    "flows": [
+                        {
+                            "name": "hkube_desc",
+                            "program": [
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 0,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                }
+                            ]
+                        },
+                        {
+                            "name": "hkube_t_res",
+                            "program": [
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 0,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                }
+                            ]
+                        },
+                        {
+                            "name": "hkube_nav",
+                            "program": [
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 0,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                }
+                            ]
+                        },
+                        {
+                            "name": "et_f",
+                            "program": [
+                                {
+                                    "rate": 10,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 0,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 10,
+                                    "time": 120,
+                                    "size": 80
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        },
+        {
+            "kind": "algorithm",
+            "stateType": "stateful",
+            "nodeName": "sen-3",
+            "algorithmName": "start-streaming",
+            "input": [
+                {
+                    "flows": [
+                        {
+                            "name": "hkube_desc",
+                            "program": [
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 0,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                }
+                            ]
+                        },
+                        {
+                            "name": "hkube_t_res",
+                            "program": [
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 0,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                }
+                            ]
+                        },
+                        {
+                            "name": "hkube_nav",
+                            "program": [
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 0,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                }
+                            ]
+                        },
+                        {
+                            "name": "et_f",
+                            "program": [
+                                {
+                                    "rate": 10,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 0,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 10,
+                                    "time": 120,
+                                    "size": 80
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        },
+        {
+            "kind": "algorithm",
+            "stateType": "stateful",
+            "nodeName": "sen-4",
+            "algorithmName": "start-streaming",
+            "input": [
+                {
+                    "flows": [
+                        {
+                            "name": "hkube_desc",
+                            "program": [
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 0,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                }
+                            ]
+                        },
+                        {
+                            "name": "hkube_t_res",
+                            "program": [
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 0,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                }
+                            ]
+                        },
+                        {
+                            "name": "hkube_nav",
+                            "program": [
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 0,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                }
+                            ]
+                        },
+                        {
+                            "name": "et_f",
+                            "program": [
+                                {
+                                    "rate": 10,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 0,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 10,
+                                    "time": 120,
+                                    "size": 80
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        },
+        {
+            "kind": "algorithm",
+            "stateType": "stateful",
+            "nodeName": "sen-5",
+            "algorithmName": "start-streaming",
+            "input": [
+                {
+                    "flows": [
+                        {
+                            "name": "hkube_desc",
+                            "program": [
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 0,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                }
+                            ]
+                        },
+                        {
+                            "name": "hkube_t_res",
+                            "program": [
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 0,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                }
+                            ]
+                        },
+                        {
+                            "name": "hkube_nav",
+                            "program": [
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 0,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 1,
+                                    "time": 120,
+                                    "size": 80
+                                }
+                            ]
+                        },
+                        {
+                            "name": "et_f",
+                            "program": [
+                                {
+                                    "rate": 10,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 0,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 10,
+                                    "time": 120,
+                                    "size": 80
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        },
+        {
+            "kind": "algorithm",
+            "stateType": "stateful",
+            "nodeName": "sen-out-1",
+            "algorithmName": "statefull-time-statistics",
+            "input": [],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        },
+        {
+            "kind": "algorithm",
+            "stateType": "stateful",
+            "nodeName": "sen-out-2",
+            "algorithmName": "statefull-time-statistics",
+            "input": [],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        },
+        {
+            "kind": "algorithm",
+            "stateType": "stateful",
+            "nodeName": "sen-out-3",
+            "algorithmName": "statefull-time-statistics",
+            "input": [],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        },
+        {
+            "kind": "algorithm",
+            "stateType": "stateful",
+            "nodeName": "sen-out-4",
+            "algorithmName": "statefull-time-statistics",
+            "input": [],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        },
+        {
+            "kind": "algorithm",
+            "stateType": "stateful",
+            "nodeName": "sen-out-5",
+            "algorithmName": "statefull-time-statistics",
+            "input": [],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        },
+        {
+            "kind": "algorithm",
+            "stateType": "stateful",
+            "nodeName": "ag-man",
+            "algorithmName": "start-streaming",
+            "input": [
+                {
+                    "flows": [
+                        {
+                            "name": "hkube_desc",
+                            "program": [
+                                {
+                                    "rate": 50,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 0,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 50,
+                                    "time": 120,
+                                    "size": 80
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        },
+        {
+            "kind": "algorithm",
+            "stateType": "stateless",
+            "nodeName": "navi",
+            "algorithmName": "stateless-time-statistics",
+            "minStatelessCount": 0,
+            "maxStatelessCount": 0,
+            "input": [],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        },
+        {
+            "kind": "algorithm",
+            "stateType": "stateful",
+            "nodeName": "dete-man",
+            "algorithmName": "start-streaming",
+            "input": [
+                {
+                    "flows": [
+                        {
+                            "name": "hkube_desc",
+                            "program": [
+                                {
+                                    "rate": 100,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 0,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 100,
+                                    "time": 120,
+                                    "size": 80
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        },
+        {
+            "kind": "algorithm",
+            "stateType": "stateless",
+            "nodeName": "aga-al",
+            "algorithmName": "stateless-time-statistics",
+            "minStatelessCount": 2,
+            "maxStatelessCount": null,
+            "input": [],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        },
+        {
+            "kind": "algorithm",
+            "stateType": "stateful",
+            "nodeName": "req-man",
+            "algorithmName": "start-streaming",
+            "input": [
+                {
+                    "flows": [
+                        {
+                            "name": "hkube_desc",
+                            "program": [
+                                {
+                                    "rate": 50,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 0,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 50,
+                                    "time": 120,
+                                    "size": 80
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        },
+        {
+            "kind": "algorithm",
+            "stateType": "stateful",
+            "nodeName": "syn-man",
+            "algorithmName": "start-streaming",
+            "input": [
+                {
+                    "flows": [
+                        {
+                            "name": "hkube_desc",
+                            "program": [
+                                {
+                                    "rate": 50,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 0,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 50,
+                                    "time": 120,
+                                    "size": 80
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        },
+        {
+            "kind": "algorithm",
+            "stateType": "stateful",
+            "nodeName": "iku-man",
+            "algorithmName": "start-streaming",
+            "input": [
+                {
+                    "flows": [
+                        {
+                            "name": "hkube_desc",
+                            "program": [
+                                {
+                                    "rate": 50,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 0,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 50,
+                                    "time": 120,
+                                    "size": 80
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        },
+        {
+            "kind": "algorithm",
+            "stateType": "stateless",
+            "nodeName": "et-kaf",
+            "algorithmName": "stateless-time-statistics",
+            "minStatelessCount": 0,
+            "maxStatelessCount": 0,
+            "input": [
+                {
+                    "flows": [
+                        {
+                            "name": "hkube_t_res",
+                            "program": [
+                                {
+                                    "rate": 50,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 0,
+                                    "time": 120,
+                                    "size": 80
+                                },
+                                {
+                                    "rate": 50,
+                                    "time": 120,
+                                    "size": 80
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        },
+        {
+            "kind": "algorithm",
+            "stateType": "stateful",
+            "nodeName": "et-ma-8",
+            "algorithmName": "statefull-time-statistics",
+            "input": [],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        },
+        {
+            "kind": "algorithm",
+            "stateType": "stateful",
+            "nodeName": "et-ma-1",
+            "algorithmName": "statefull-time-statistics",
+            "input": [],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        },
+        {
+            "kind": "algorithm",
+            "stateType": "stateful",
+            "nodeName": "et-ma-2",
+            "algorithmName": "statefull-time-statistics",
+            "input": [],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        },
+        {
+            "kind": "algorithm",
+            "stateType": "stateful",
+            "nodeName": "et-ma-3",
+            "algorithmName": "statefull-time-statistics",
+            "input": [],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        },
+        {
+            "kind": "algorithm",
+            "stateType": "stateful",
+            "nodeName": "et-ma-4",
+            "algorithmName": "statefull-time-statistics",
+            "input": [],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        },
+        {
+            "kind": "algorithm",
+            "stateType": "stateful",
+            "nodeName": "et-ma-5",
+            "algorithmName": "statefull-time-statistics",
+            "input": [],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        },
+        {
+            "kind": "algorithm",
+            "stateType": "stateful",
+            "nodeName": "et-ma-6",
+            "algorithmName": "statefull-time-statistics",
+            "input": [],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        },
+        {
+            "kind": "algorithm",
+            "stateType": "stateful",
+            "nodeName": "et-ma-7",
+            "algorithmName": "statefull-time-statistics",
+            "input": [],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        },
+        {
+            "kind": "algorithm",
+            "stateType": "stateless",
+            "nodeName": "iku-al",
+            "algorithmName": "stateless-time-statistics",
+            "minStatelessCount": 0,
+            "maxStatelessCount": 0,
+            "input": [],
+            "retry": {
+                "policy": "OnCrash",
+                "limit": 3
+            },
+            "ttl": 0
+        }
+    ]
+}
