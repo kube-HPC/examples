@@ -11,11 +11,16 @@ class SenderThread(Thread):
 
     def run(self):
         sent = 0
-        print("Demonstrating ein-")
+        print("Running on flow " + self.flow)
+        j = 0
         while True:
+            j = j + 1
+            print("start program set " + str(j) + " on flow " + self.flow)
+            f = 0
             for scenario in self.program:
-                print("Demonstrating ein")
-                print("rate is: " + str(scenario["rate"]))
+                f = f + 1
+                print("Program " + str(f) + " on flow " + self.flow)
+                print("rate is: " + str(scenario["rate"]) + " on flow " + self.flow)
                 myimage = bytearray(scenario["size"])
                 i = 0
                 while i < scenario["time"]:

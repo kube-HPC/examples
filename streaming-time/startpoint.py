@@ -10,14 +10,13 @@ numberOfMsg = 0
 sum = 0
 active = True
 sumFromStart = 0
-
+process_time = 0.0001
 
 def start(args, hkube_api):
     i = 0
     sent = 0
     rate = 100
     active = True
-    process_time = 0.0001
     size = 7000
 
     print("~~~~~~~~~starts~~~~~~~~~~~~updated")
@@ -41,25 +40,25 @@ def start(args, hkube_api):
 
     flows = None
     if args['input']:
-        if len(args['input']) > 0 and isinstance(args['input'][0],dict) and args['input'][0].get("flows") is not None:
+        if type(args['input'][0]) is dict and 'process_time' in args['input'][0]:
+            process_time = args['input'][0]['process_time']
+            print ("Got process time " + str(process_time))
+        if len(args['input']) > 0 and isinstance(args['input'][0], dict) and args['input'][0].get("flows") is not None:
             print("has flows")
             for flow in args['input'][0]['flows']:
+                print("about to start flow with " + str(flow))
                 sender = SenderThread(hkube_api=hkube_api, flow=flow["name"], program=flow["program"])
                 sender.start()
-            else:
-                print("no flows" + str(args["input"][0]))
-                if type(args['input'][0]) is dict and 'process_time' in args['input'][0]:
-                    process_time = args['input'][0]['process_time']
-                if type(args['input'][0]) is dict and 'rate' in args['input'][0]:
-                    rate = args['input'][0]['rate']
-                if type(args['input'][0]) is dict and 'size' in args['input'][0]:
-                    size = args['input'][0]['size']
-                sender = SenderThread(hkube_api=hkube_api, flow=None, program=[{"rate": rate, "size": size, "time": 120}])
-                sender.start()
+        else:
+            print("no flows" + str(args["input"][0]))
+            if type(args['input'][0]) is dict and 'rate' in args['input'][0]:
+                rate = args['input'][0]['rate']
+            if type(args['input'][0]) is dict and 'size' in args['input'][0]:
+                size = args['input'][0]['size']
+            sender = SenderThread(hkube_api=hkube_api, flow=None,
+                                  program=[{"rate": rate, "size": size, "time": 120}])
+            sender.start()
 
-
-
-    print("process time: " + str(process_time))
     myimage = bytearray(size)
 
     while True:
@@ -74,6 +73,7 @@ def start(args, hkube_api):
 
 def stop(a):
     print("at stop")
+
 
 def main():
     print("starting algorithm runner")
