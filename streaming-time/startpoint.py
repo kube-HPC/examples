@@ -1,5 +1,7 @@
 from __future__ import print_function, division, absolute_import
 
+from threading import Thread
+
 from hkube_python_wrapper import Algorunner
 
 from sender import SenderThread
@@ -10,6 +12,7 @@ numberOfMsg = 0
 sum = 0
 active = True
 sumFromStart = 0
+global process_time
 process_time = 0.0001
 
 def start(args, hkube_api):
@@ -19,7 +22,7 @@ def start(args, hkube_api):
     active = True
     size = 7000
 
-    print("~~~~~~~~~starts~~~~~~~~~~~~updated")
+    print("~~~~~~~~~starts~~~~~~~~~~~~updatestam")
 
     def handleMessage(msg, origin):
         global numberOfMsg
@@ -33,14 +36,23 @@ def start(args, hkube_api):
         fromStart = msg["time" + str(msg['node'])] - msg["time1"]
         sumFromStart += fromStart
         sum += deltaFromPrev
+        global process_time
         time.sleep(float(process_time))
 
-    hkube_api.registerInputListener(onMessage=handleMessage)
-    hkube_api.startMessageListening()
+    def keepBusy():
+        ii = 0
+        while (True):
+            ii = ii + 1
+    the = Thread(target=keepBusy)
+    print ("Starting busy thread")
+    the.start()
+
+
 
     flows = None
     if args['input']:
         if type(args['input'][0]) is dict and 'process_time' in args['input'][0]:
+            global process_time
             process_time = args['input'][0]['process_time']
             print ("Got process time " + str(process_time))
         if len(args['input']) > 0 and isinstance(args['input'][0], dict) and args['input'][0].get("flows") is not None:
@@ -60,7 +72,8 @@ def start(args, hkube_api):
             sender.start()
 
     myimage = bytearray(size)
-
+    hkube_api.registerInputListener(onMessage=handleMessage)
+    hkube_api.startMessageListening()
     while True:
         i = i + 1
         if i % 80 == 0:
