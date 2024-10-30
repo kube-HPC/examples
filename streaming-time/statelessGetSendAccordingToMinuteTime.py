@@ -1,5 +1,5 @@
 import time
-import random
+from datetime import datetime
 
 numberOfMsg = 0
 sum = 0
@@ -8,13 +8,15 @@ sumFromStart = 0
 
 
 def start(args, hkube_api):
-    min_process_time = 0.0001
-    max_process_time = 1
+    current_minute = datetime.now().minute
+    process_time = 1 if current_minute % 2 == 0 else 0.1
     if args['input']:
-        if type(args['input'][0]) is dict and 'min_process_time' in args['input'][0]:
-            min_process_time = args['input'][0]['min_process_time']
-        if type(args['input'][0]) is dict and 'max_process_time' in args['input'][0]:
-            max_process_time = args['input'][0]['max_process_time']
+        if current_minute % 2 == 1:
+            if type(args['input'][0]) is dict and 'odd_minute_process_time' in args['input'][0]:
+                process_time = args['input'][0]['odd_minute_process_time']
+        else:
+            if type(args['input'][0]) is dict and 'even_minute_process_time' in args['input'][0]:
+                process_time = args['input'][0]['even_minute_process_time']
     msg = args.get('streamInput')['message']
     global numberOfMsg
     global sum
@@ -29,7 +31,7 @@ def start(args, hkube_api):
     if numberOfMsg % 40 == 1:
         print("Avg from prev node " + str(sum / numberOfMsg))
         print("Avg from start node " + str(sumFromStart / numberOfMsg))
-    time.sleep(random.uniform(min_process_time, max_process_time))
+    time.sleep(process_time)
     return msg
 
 
