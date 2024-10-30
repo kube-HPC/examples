@@ -23,12 +23,13 @@ def start(args, hkube_api):
             lastWasEven = false
 
     if args['input']:
-        if current_minute % 2 == 1:
-            if type(args['input'][0]) is dict and 'odd_minute_process_time' in args['input'][0]:
-                process_time = args['input'][0]['odd_minute_process_time']
-        else:
+        if current_minute % 2 == 0:
             if type(args['input'][0]) is dict and 'even_minute_process_time' in args['input'][0]:
                 process_time = args['input'][0]['even_minute_process_time']
+        else:
+            if type(args['input'][0]) is dict and 'odd_minute_process_time' in args['input'][0]:
+                process_time = args['input'][0]['odd_minute_process_time']
+            
     msg = args.get('streamInput')['message']
     global numberOfMsg
     global sum
