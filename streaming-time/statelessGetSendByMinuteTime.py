@@ -5,11 +5,23 @@ numberOfMsg = 0
 sum = 0
 active = True
 sumFromStart = 0
+lastWasEven = false
 
 
 def start(args, hkube_api):
     current_minute = datetime.now().minute
-    process_time = 1 if current_minute % 2 == 0 else 0.1
+    global lastWasEven
+    if current_minute % 2 == 0:
+        process_time = 1
+        if not lastWasEven:
+            print("Minute is even")
+            lastWasEven = true
+    else:
+        process_time = 0.1
+        if lastWasEven:
+            print("Minute is odd")
+            lastWasEven = false
+
     if args['input']:
         if current_minute % 2 == 1:
             if type(args['input'][0]) is dict and 'odd_minute_process_time' in args['input'][0]:
