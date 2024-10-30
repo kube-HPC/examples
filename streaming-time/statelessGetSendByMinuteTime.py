@@ -5,30 +5,28 @@ numberOfMsg = 0
 sum = 0
 active = True
 sumFromStart = 0
-lastWasEven = false
+lastWasEven = False
+
+def getInputValue(args, input_name, default_value):
+    if args['input'] and type(args['input'][0]) is dict and input_name in args['input'][0]:
+            return args['input'][0][input_name]
+    else:
+        return default_value
 
 
 def start(args, hkube_api):
     current_minute = datetime.now().minute
     global lastWasEven
     if current_minute % 2 == 0:
-        process_time = 1
+        process_time = getInputValue(args, 'even_minute_process_time', 1)
         if not lastWasEven:
-            print("Minute is even")
-            lastWasEven = true
+            print(f"Process time is now {process_time}")
+            lastWasEven = True
     else:
-        process_time = 0.1
+        process_time = getInputValue(args, 'odd_minute_process_time', 0.1)
         if lastWasEven:
-            print("Minute is odd")
-            lastWasEven = false
-
-    if args['input']:
-        if current_minute % 2 == 0:
-            if type(args['input'][0]) is dict and 'even_minute_process_time' in args['input'][0]:
-                process_time = args['input'][0]['even_minute_process_time']
-        else:
-            if type(args['input'][0]) is dict and 'odd_minute_process_time' in args['input'][0]:
-                process_time = args['input'][0]['odd_minute_process_time']
+            print(f"Process time is now {process_time}")
+            lastWasEven = False
             
     msg = args.get('streamInput')['message']
     global numberOfMsg
@@ -49,5 +47,10 @@ def start(args, hkube_api):
 
 
 
-if __name__ == '__main__':
-    start(args={'streamInput': {'message': "hi"}}, hkube_api="None")
+def main():
+    print("starting algorithm runner")
+    print(str(Algorunner))
+    Algorunner.Debug('ws://dev.hkube.org/hkube/debug/stateless-time-statistics', start=start)
+    
+if __name__ == "__main__":
+    main()
