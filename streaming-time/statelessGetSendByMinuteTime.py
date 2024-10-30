@@ -7,9 +7,10 @@ active = True
 sumFromStart = 0
 lastWasEven = False
 
+
 def getInputValue(args, input_name, default_value):
     if args['input'] and type(args['input'][0]) is dict and input_name in args['input'][0]:
-            return args['input'][0][input_name]
+        return args['input'][0][input_name]
     else:
         return default_value
 
