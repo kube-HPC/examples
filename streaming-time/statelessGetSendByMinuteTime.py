@@ -5,10 +5,11 @@ numberOfMsg = 0
 sum = 0
 active = True
 sumFromStart = 0
-lastWasEven = False
+processTimeFlag = True  # True when the first process time is selected
+intervalTimeStart = time.time()  # in seconds
 
 
-def getInputValue(args, input_name, default_value):
+def get_input_value(args, input_name, default_value):
     if args['input'] and type(args['input'][0]) is dict and input_name in args['input'][0]:
         return args['input'][0][input_name]
     else:
@@ -16,19 +17,25 @@ def getInputValue(args, input_name, default_value):
 
 
 def start(args, hkube_api):
-    current_minute = datetime.now().minute
-    global lastWasEven
-    if current_minute % 2 == 0:
-        process_time = getInputValue(args, 'even_minute_process_time', 1)
-        if not lastWasEven:
-            print(f"Process time is now {process_time}")
-            lastWasEven = True
+    curr_time = time.time()
+    global processTimeFlag
+    global intervalTimeStart
+    change_occurred = False
+
+    interval = get_input_value(args, 'interval', 60)
+    if curr_time - intervalTimeStart >= interval:
+        processTimeFlag = not processTimeFlag
+        intervalTimeStart = curr_time
+        change_occurred = True
+
+    if processTimeFlag:
+        process_time = get_input_value(args, 'first_process_time', 1)
     else:
-        process_time = getInputValue(args, 'odd_minute_process_time', 0.1)
-        if lastWasEven:
-            print(f"Process time is now {process_time}")
-            lastWasEven = False
-            
+        process_time = get_input_value(args, 'second_process_time', 0.1)
+
+    if change_occurred:
+        print(f"Process time has changed to {process_time}")
+
     msg = args.get('streamInput')['message']
     global numberOfMsg
     global sum
