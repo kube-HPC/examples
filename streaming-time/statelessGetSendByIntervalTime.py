@@ -5,7 +5,7 @@ numberOfMsg = 0
 sum = 0
 active = True
 sumFromStart = 0
-processTimeFlag = True  # True when the first process time is selected
+processTimeFlag = None  # True when the first process time is selected, None when its the first run
 intervalTimeStart = time.time()  # in seconds
 
 
@@ -18,9 +18,12 @@ def get_input_value(args, input_name, default_value):
 
 def start(args, hkube_api):
     curr_time = time.time()
-    global processTimeFlag
-    global intervalTimeStart
     change_occurred = False
+    global processTimeFlag
+    if processTimeFlag is None:
+        processTimeFlag = True
+        change_occurred = True
+    global intervalTimeStart
 
     interval = get_input_value(args, 'interval', 60)
     if curr_time - intervalTimeStart >= interval:
@@ -34,7 +37,7 @@ def start(args, hkube_api):
         process_time = get_input_value(args, 'second_process_time', 0.1)
 
     if change_occurred:
-        print(f"Process time has changed to {process_time}")
+        print(f"Process time is set to: {process_time}")
 
     msg = args.get('streamInput')['message']
     global numberOfMsg
