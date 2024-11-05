@@ -5,7 +5,7 @@ numberOfMsg = 0
 sum = 0
 active = True
 sumFromStart = 0
-currentlyFirst = None
+currentlyFirst = None  # indicates if we are currently using the first process time
 
 
 def get_input_value(args, input_name, default_value):
@@ -19,14 +19,14 @@ def start(args, hkube_api):
     curr_time = time.time()
     change_occurred = False
     global currentlyFirst
-    if currentlyFirst is None:  # Initial printing
-        change_occurred = True
-
     interval = get_input_value(args, 'interval', 60)
+    
     currModelo = (curr_time // interval) % 2
-    lastValue = currentlyFirst
+        if currentlyFirst is None:  # Initial printing
+        change_occurred = True
+    else:
+        change_occurred = (currentlyFirst != (currModelo == 0))
     currentlyFirst = (currModelo == 0)
-    change_occurred = (currentlyFirst != lastValue)
 
     if currentlyFirst:
         process_time = get_input_value(args, 'first_process_time', 1)
