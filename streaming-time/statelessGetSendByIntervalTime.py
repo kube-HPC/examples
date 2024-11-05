@@ -21,12 +21,12 @@ def start(args, hkube_api):
     global currentlyFirst
     interval = get_input_value(args, 'interval', 60)
     
-    currModelo = (curr_time // interval) % 2
-        if currentlyFirst is None:  # Initial printing
+    curr_modelo = (curr_time // interval) % 2
+    if currentlyFirst is None:  # Initial printing
         change_occurred = True
     else:
-        change_occurred = (currentlyFirst != (currModelo == 0))
-    currentlyFirst = (currModelo == 0)
+        change_occurred = (currentlyFirst != (curr_modelo == 0))
+    currentlyFirst = (curr_modelo == 0)
 
     if currentlyFirst:
         process_time = get_input_value(args, 'first_process_time', 1)
