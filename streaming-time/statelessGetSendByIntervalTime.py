@@ -6,7 +6,6 @@ sum = 0
 active = True
 sumFromStart = 0
 currentlyFirst = None
-lastModelo = 0
 
 
 def get_input_value(args, input_name, default_value):
@@ -19,19 +18,12 @@ def get_input_value(args, input_name, default_value):
 def start(args, hkube_api):
     curr_time = time.time()
     change_occurred = False
-    interval = get_input_value(args, 'interval', 60)
     global currentlyFirst
-    global lastModelo
-    if currentlyFirst is None:  # Initial values
-        lastModelo = (curr_time // interval) % 2
-        currentlyFirst = True
+    if currentlyFirst is None:  # Initial printing
         change_occurred = True
 
-    curr_modelo = (curr_time // interval) % 2
-    if curr_modelo != lastModelo:
-        currentlyFirst = not currentlyFirst
-        change_occurred = True
-        lastModelo = curr_modelo
+    interval = get_input_value(args, 'interval', 60)
+    currentlyFirst = ((curr_time // interval) % 2) == 0
 
     if currentlyFirst:
         process_time = get_input_value(args, 'first_process_time', 1)
