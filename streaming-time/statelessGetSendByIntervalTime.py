@@ -5,8 +5,8 @@ numberOfMsg = 0
 sum = 0
 active = True
 sumFromStart = 0
-processTimeFlag = None  # True when the first process time is selected, None when its the first run
-intervalTimeStart = time.time()  # in seconds
+currentlyFirst = None
+lastModelo = 0
 
 
 def get_input_value(args, input_name, default_value):
@@ -19,19 +19,21 @@ def get_input_value(args, input_name, default_value):
 def start(args, hkube_api):
     curr_time = time.time()
     change_occurred = False
-    global processTimeFlag
-    if processTimeFlag is None:
-        processTimeFlag = True
-        change_occurred = True
-    global intervalTimeStart
-
     interval = get_input_value(args, 'interval', 60)
-    if curr_time - intervalTimeStart >= interval:
-        processTimeFlag = not processTimeFlag
-        intervalTimeStart = curr_time
+    global currentlyFirst
+    global lastModelo
+    if currentlyFirst is None:  # Initial values
+        lastModelo = (curr_time // interval) % 2
+        currentlyFirst = True
         change_occurred = True
 
-    if processTimeFlag:
+    curr_modelo = (curr_time // interval) % 2
+    if curr_modelo != lastModelo:
+        currentlyFirst = not currentlyFirst
+        change_occurred = True
+        lastModelo = curr_modelo
+
+    if currentlyFirst:
         process_time = get_input_value(args, 'first_process_time', 1)
     else:
         process_time = get_input_value(args, 'second_process_time', 0.1)
