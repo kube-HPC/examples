@@ -23,7 +23,10 @@ def start(args, hkube_api):
         change_occurred = True
 
     interval = get_input_value(args, 'interval', 60)
-    currentlyFirst = ((curr_time // interval) % 2) == 0
+    currModelo = (curr_time // interval) % 2
+    lastValue = currentlyFirst
+    currentlyFirst = (currModelo == 0)
+    change_occurred = (currentlyFirst != lastValue)
 
     if currentlyFirst:
         process_time = get_input_value(args, 'first_process_time', 1)
