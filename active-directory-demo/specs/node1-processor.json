@@ -1,0 +1,55 @@
+{
+  "name": "node1-processor",
+  "cpu": 1,
+  "gpu": 0,
+  "mem": "256Mi",
+  "workerEnv": {},
+  "algorithmEnv": {
+    "PROCESSING_TIME": "10"
+  },
+  "reservedMemory": "512Mi",
+  "minHotWorkers": 0,
+  "options": {
+    "pending": false
+  },
+  "env": "python",
+  "entryPoint": "input_processor.py",
+  "type": "Code",
+  "fileInfo": {
+    "fileExt": "gz",
+    "checksum": "9a4bcb16cdfb4cc248444c5f49a9e9d86b75e95b",
+    "fileSize": 654,
+    "path": "dev1-spot-hkube-builds/node1-processor-lsc855"
+  },
+  "algorithmImage": "docker.io/hkubedevtest/node1-processor:vzyyr1uuy",
+  "version": "jbur7pnhkc",
+  "created": 1757400660025,
+  "modified": 1757427610713,
+  "auditTrail": [
+    {
+      "user": "defaultUser",
+      "timestamp": 1757427610713,
+      "version": "jbur7pnhkc"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757427599833,
+      "version": "jbur7pnhkc"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757426930980,
+      "version": "jbur7pnhkc"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757426433421,
+      "version": "kmyevhu81q"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757405040694,
+      "version": "p8o2do6nmr"
+    }
+  ]
+}

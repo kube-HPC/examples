@@ -1,0 +1,141 @@
+{
+  "name": "node3-send-mail",
+  "description": "Sidecar is for mocking. To check what is going on at mailhog: kubectl port-forward node3-send-mail-gxfts-dzbdv 8025:8025 and go to http://localhost:8025/#",
+  "volumes": [],
+  "cpu": 1,
+  "gpu": 0,
+  "mem": "256Mi",
+  "workerEnv": {},
+  "algorithmEnv": {
+    "NOTIFY_WS_URL": "ws://localhost:5000/ws",
+    "SMTP_HOST": "localhost",
+    "SMTP_PORT": "1025",
+    "SMTP_FROM": "example@gmail.com"
+  },
+  "sideCars": [
+    {
+      "container": {
+        "name": "ws-mock-service",
+        "image": "hkubedevtest/ws-mock-service:v68votvzy"
+      },
+      "environments": {
+        "MOCK_PORT": "5000"
+      }
+    },
+    {
+      "container": {
+        "name": "mailhog",
+        "image": "mailhog/mailhog:latest",
+        "ports": [
+          {
+            "containerPort": 1025
+          },
+          {
+            "containerPort": 8025
+          }
+        ]
+      },
+      "environments": {}
+    }
+  ],
+  "reservedMemory": "512Mi",
+  "minHotWorkers": 1,
+  "options": {
+    "pending": false
+  },
+  "env": "python",
+  "entryPoint": "send_mail.py",
+  "type": "Code",
+  "fileInfo": {
+    "fileExt": "gz",
+    "checksum": "6c480cbe69325866f6b00c1a5e66073e5c023435",
+    "fileSize": 1423,
+    "path": "dev1-spot-hkube-builds/node3-send-mail-9azb1c"
+  },
+  "algorithmImage": "docker.io/hkubedevtest/node3-send-mail:vj68thel1",
+  "version": "dla379a5nx",
+  "created": 1757400847173,
+  "modified": 1757432493317,
+  "auditTrail": [
+    {
+      "user": "defaultUser",
+      "timestamp": 1757432493317,
+      "version": "dla379a5nx"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757429757077,
+      "version": "ce67tx5dts"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757428579929,
+      "version": "rtinphtfim"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757428255943,
+      "version": "3osu5fwhw2"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757426625613,
+      "version": "j1o8tq4ln8"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757426482605,
+      "version": "y23p19kgi8"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757423584437,
+      "version": "4ss0t5sgz6"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757422985436,
+      "version": "y7ojpjavgt"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757422301845,
+      "version": "rsg9hfhns5"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757422261519,
+      "version": "1zd6rgudvj"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757421790500,
+      "version": "1o7suv464m"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757420569827,
+      "version": "gwt732nogb"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757420033790,
+      "version": "1csdc00b05"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757415691792,
+      "version": "x3ikdfl7pu"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757414462505,
+      "version": "e1namykheo"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757414379887,
+      "version": "9nhu16zpg7"
+    }
+  ]
+}

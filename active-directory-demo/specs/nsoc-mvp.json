@@ -1,0 +1,100 @@
+{
+  "modified": 1757430912353,
+  "name": "nsoc-mvp",
+  "kind": "batch",
+  "flowInput": {
+    "users": [
+      {
+        "user": "user2",
+        "email": "user2@example.com",
+        "case": "case#100",
+        "activity_description": "suspicious login attempts"
+      },
+      {
+        "user": "user4",
+        "email": "user4@example.com",
+        "case": "case#101",
+        "activity_description": "requested password reset"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "nodeName": "processor",
+      "algorithmName": "node1-processor",
+      "input": [
+        "#@flowInput.users"
+      ],
+      "retry": {
+        "policy": "OnCrash",
+        "limit": 3
+      },
+      "batchOperation": "indexed",
+      "ttl": 0,
+      "kind": "algorithm",
+      "minStatelessCount": 0
+    },
+    {
+      "nodeName": "ad-disable",
+      "algorithmName": "node2-ad-disable",
+      "input": [
+        "#@processor"
+      ],
+      "retry": {
+        "policy": "OnCrash",
+        "limit": 3
+      },
+      "batchOperation": "indexed",
+      "ttl": 0,
+      "kind": "algorithm",
+      "minStatelessCount": 0
+    },
+    {
+      "nodeName": "send-mail",
+      "algorithmName": "node3-send-mail",
+      "input": [
+        "@ad-disable"
+      ],
+      "retry": {
+        "policy": "OnCrash",
+        "limit": 3
+      },
+      "batchOperation": "indexed",
+      "ttl": 0,
+      "kind": "algorithm",
+      "minStatelessCount": 0
+    }
+  ],
+  "triggers": {
+    "cron": {
+      "enabled": false,
+      "pattern": "0 * * * *"
+    },
+    "pipelines": []
+  },
+  "options": {
+    "batchTolerance": 80,
+    "concurrentPipelines": {
+      "amount": 10,
+      "rejectOnFailure": true
+    },
+    "ttl": 3600,
+    "progressVerbosityLevel": "info"
+  },
+  "priority": 3,
+  "experimentName": "main",
+  "version": "qq1hdyy159",
+  "auditTrail": [
+    {
+      "user": "defaultUser",
+      "timestamp": null,
+      "version": "qq1hdyy159"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757430158226,
+      "version": "bjcvxrhv11"
+    }
+  ],
+  "created": 1757430912353
+}

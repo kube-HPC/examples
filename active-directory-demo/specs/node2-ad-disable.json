@@ -1,0 +1,56 @@
+{
+  "name": "node2-ad-disable",
+  "description": "version with password swap and debug logs",
+  "cpu": 1,
+  "gpu": 0,
+  "mem": "256Mi",
+  "workerEnv": {},
+  "algorithmEnv": {
+    "NOTIFY_WS_URL": "ws://localhost:5000/ws",
+    "LDAP_URI": "ldap://100.70.11.153:389",
+    "LDAP_BASE_DN": "dc=example,dc=org",
+    "LDAP_ADMIN_DN": "cn=admin,dc=example,dc=org",
+    "LDAP_ADMIN_PASSWORD": "adminpassword"
+  },
+  "sideCars": [
+    {
+      "container": {
+        "name": "ws-mock-service",
+        "image": "hkubedevtest/ws-mock-service:v68votvzy"
+      },
+      "environments": {
+        "MOCK_PORT": "5000"
+      }
+    }
+  ],
+  "reservedMemory": "512Mi",
+  "minHotWorkers": 1,
+  "options": {
+    "pending": false
+  },
+  "env": "python",
+  "entryPoint": "ad_disable.py",
+  "type": "Code",
+  "fileInfo": {
+    "fileExt": "gz",
+    "checksum": "7037b8e714ce1bd0a07f7b76aefed14893d80bf6",
+    "fileSize": 1540,
+    "path": "dev1-spot-hkube-builds/node2-ad-disable-g9ngfs"
+  },
+  "algorithmImage": "docker.io/hkubedevtest/node2-ad-disable:votkpmb3u",
+  "auditTrail": [
+    {
+      "user": "defaultUser",
+      "timestamp": 1757432487146,
+      "version": "abmx5k4stb"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757429804544,
+      "version": "k04egmznr9"
+    }
+  ],
+  "version": "abmx5k4stb",
+  "created": 1757429804544,
+  "modified": 1757432487146
+}
