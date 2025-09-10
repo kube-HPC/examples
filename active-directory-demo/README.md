@@ -55,8 +55,11 @@ kubectl run dns-test --rm -i --tty --image=busybox --restart=Never --namespace=m
 This will print: `<namespace>.svc.<CLUSTER_DOMAIN>`  
 You can then set:
 
-* `LDAP_URI` → `ldap://<ldap-pod>.<ldap-namespace>.svc.<CLUSTER_DOMAIN>:389` (389 is ldap service port)
-* `SMTP_HOST` → `mailhog.<namespace>.svc.<CLUSTER_DOMAIN>`
+* `LDAP_URI` → `ldap://<ldap-service>.<namespace>.svc.<CLUSTER_DOMAIN>:389` (389 is ldap service port)
+* `SMTP_HOST` → `<mailhog_service>.<namespace>.svc.<CLUSTER_DOMAIN>`
+
+> If followed closely, `<mailhog_service>` suppose to be `mailhog`, `<namespace>`=`default`  
+> For LDAP, `<ldap-service>` suppose to be `ldap-service`, `<namespace>`=`ldap`
 
 ### Viewing Emails
 

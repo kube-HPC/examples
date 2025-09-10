@@ -7,7 +7,7 @@
   "workerEnv": {},
   "algorithmEnv": {
     "NOTIFY_WS_URL": "ws://localhost:5000/ws",
-    "LDAP_URI": "ldap://100.70.11.153:389"
+    "LDAP_URI": "ldap://ldap-service.ldap.svc.dev1-spot:389"
   },
   "sideCars": [
     {
