@@ -7,18 +7,16 @@
     "workerEnv": {},
     "algorithmEnv": {
         "NOTIFY_WS_URL": "ws://localhost:5000/ws",
-        "LDAP_URI": "ldap://ldap.ldap.svc.dev1-spot:389",
-        "LDAP_BASE_DN": "dc=example,dc=org",
-        "LDAP_ADMIN_DN": "cn=admin,dc=example,dc=org"
+        "LDAP_URI": "ldap://100.70.11.153:389"
     },
     "sideCars": [
         {
             "container": {
-                "name": "ws-mock-service",
+                "name": "ws-service",
                 "image": "hkubedevtest/ws-service:yuut9wlmu"
             },
             "environments": {
-                "MOCK_PORT": "5000"
+                "PORT": "5000"
             }
         }
     ],

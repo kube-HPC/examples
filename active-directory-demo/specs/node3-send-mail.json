@@ -1,6 +1,6 @@
 {
   "name": "node3-send-mail",
-  "description": "Sidecar is for mocking. To check what is going on at mailhog: kubectl port-forward node3-send-mail-gxfts-dzbdv 8025:8025 and go to http://localhost:8025/#",
+  "description": "Mailhog with external pod",
   "volumes": [],
   "cpu": 1,
   "gpu": 0,
@@ -8,34 +8,19 @@
   "workerEnv": {},
   "algorithmEnv": {
     "NOTIFY_WS_URL": "ws://localhost:5000/ws",
-    "SMTP_HOST": "localhost",
+    "SMTP_HOST": "mailhog.mailhog.svc.dev1-spot",
     "SMTP_PORT": "1025",
     "SMTP_FROM": "example@gmail.com"
   },
   "sideCars": [
     {
       "container": {
-        "name": "ws-mock-service",
+        "name": "ws-service",
         "image": "hkubedevtest/ws-service:yuut9wlmu"
       },
       "environments": {
-        "MOCK_PORT": "5000"
+        "PORT": "5000"
       }
-    },
-    {
-      "container": {
-        "name": "mailhog",
-        "image": "mailhog/mailhog:latest",
-        "ports": [
-          {
-            "containerPort": 1025
-          },
-          {
-            "containerPort": 8025
-          }
-        ]
-      },
-      "environments": {}
     }
   ],
   "reservedMemory": "512Mi",

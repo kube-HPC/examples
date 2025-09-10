@@ -28,7 +28,7 @@ def start(args, hkube_api):
     for it in users:
         normalized = _normalize_input(it)
         if normalized is not None:
-            # Mock processing placeholder
+            # processing placeholder
             items.append(normalized)
 
     print(f"Processed Data: {items}")
