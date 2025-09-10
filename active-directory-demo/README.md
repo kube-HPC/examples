@@ -29,7 +29,7 @@ Forward MailHog port from the `send_mail` pod:
 ```
 kubectl port-forward <pod-name> 8025:8025
 ```
-Open in your browser: [http://localhost:8025/](http://localhost:8025/)
+Open in your browser: [http://localhost:8025/](http://localhost:8025/)  
 Note - it's a sidecar of send_mail.
 
 ### Environment Variables
