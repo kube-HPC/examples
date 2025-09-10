@@ -16,7 +16,7 @@
     {
       "container": {
         "name": "ws-service",
-        "image": "hkubedevtest/ws-service:yuut9wlmu"
+        "image": "hkubedevtest/ws-service:skgm4dow1"
       },
       "environments": {
         "PORT": "5000"
@@ -38,10 +38,15 @@
     "path": "dev1-spot-hkube-builds/node3-send-mail-bi09xt"
   },
   "algorithmImage": "docker.io/hkubedevtest/node3-send-mail:vlw3s0qxv",
-  "version": "eh9xrls3a9",
+  "version": "2xf32dpyug",
   "created": 1757400847173,
-  "modified": 1757494783237,
+  "modified": 1757497854428,
   "auditTrail": [
+    {
+      "user": "defaultUser",
+      "timestamp": 1757497854428,
+      "version": "2xf32dpyug"
+    },
     {
       "user": "defaultUser",
       "timestamp": 1757494783237,

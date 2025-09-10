@@ -1,88 +1,93 @@
 {
-    "name": "node2-ad-disable",
-    "description": "version with password swap and debug logs",
-    "cpu": 1,
-    "gpu": 0,
-    "mem": "256Mi",
-    "workerEnv": {},
-    "algorithmEnv": {
-        "NOTIFY_WS_URL": "ws://localhost:5000/ws",
-        "LDAP_URI": "ldap://100.70.11.153:389"
+  "name": "node2-ad-disable",
+  "description": "version with password swap and debug logs",
+  "cpu": 1,
+  "gpu": 0,
+  "mem": "256Mi",
+  "workerEnv": {},
+  "algorithmEnv": {
+    "NOTIFY_WS_URL": "ws://localhost:5000/ws",
+    "LDAP_URI": "ldap://100.70.11.153:389"
+  },
+  "sideCars": [
+    {
+      "container": {
+        "name": "ws-service",
+        "image": "hkubedevtest/ws-service:skgm4dow1"
+      },
+      "environments": {
+        "PORT": "5000"
+      }
+    }
+  ],
+  "reservedMemory": "512Mi",
+  "minHotWorkers": 1,
+  "options": {
+    "pending": false
+  },
+  "env": "python",
+  "entryPoint": "ad_disable.py",
+  "type": "Code",
+  "fileInfo": {
+    "fileExt": "gz",
+    "checksum": "ce84df732f4587a28ce0d69605db8b5610e86644",
+    "fileSize": 1537,
+    "path": "dev1-spot-hkube-builds/node2-ad-disable-az272w"
+  },
+  "algorithmImage": "docker.io/hkubedevtest/node2-ad-disable:vld6bveu5",
+  "version": "r5iis4mhru",
+  "created": 1757429804544,
+  "modified": 1757497860893,
+  "auditTrail": [
+    {
+      "user": "defaultUser",
+      "timestamp": 1757497860893,
+      "version": "r5iis4mhru"
     },
-    "sideCars": [
-        {
-            "container": {
-                "name": "ws-service",
-                "image": "hkubedevtest/ws-service:yuut9wlmu"
-            },
-            "environments": {
-                "PORT": "5000"
-            }
-        }
-    ],
-    "reservedMemory": "512Mi",
-    "minHotWorkers": 1,
-    "options": {
-        "pending": false
+    {
+      "user": "defaultUser",
+      "timestamp": 1757494588052,
+      "version": "k3ivrm2aj8"
     },
-    "env": "python",
-    "entryPoint": "ad_disable.py",
-    "type": "Code",
-    "fileInfo": {
-        "fileExt": "gz",
-        "checksum": "ce84df732f4587a28ce0d69605db8b5610e86644",
-        "fileSize": 1537,
-        "path": "dev1-spot-hkube-builds/node2-ad-disable-az272w"
+    {
+      "user": "defaultUser",
+      "timestamp": 1757490955161,
+      "version": "qb2wxm6fa0"
     },
-    "algorithmImage": "docker.io/hkubedevtest/node2-ad-disable:vld6bveu5",
-    "version": "k3ivrm2aj8",
-    "created": 1757429804544,
-    "modified": 1757494588052,
-    "auditTrail": [
-        {
-            "user": "defaultUser",
-            "timestamp": 1757494588052,
-            "version": "k3ivrm2aj8"
-        },
-        {
-            "user": "defaultUser",
-            "timestamp": 1757490955161,
-            "version": "qb2wxm6fa0"
-        },
-        {
-            "user": "defaultUser",
-            "timestamp": 1757489968022,
-            "version": "sa71n954j5"
-        },
-        {
-            "user": "defaultUser",
-            "timestamp": 1757489834286,
-            "version": "u39e1323kr"
-        },
-        {
-            "user": "defaultUser",
-            "timestamp": 1757489800441,
-            "version": "u39e1323kr"
-        },
-        {
-            "user": "defaultUser",
-            "timestamp": 1757487748088,
-            "version": "gans4d5ako"
-        },
-        {
-            "user": "defaultUser",
-            "timestamp": 1757487682079,
-            "version": "48xc7h90he"
-        },
-        {
-            "user": "defaultUser",
-            "timestamp": 1757486579193,
-            "version": "gans4d5ako"
-        },
-        {
-            "user": "defaultUser",
-            "timestamp": 1757429804544,
-            "version": "k04egmznr9"
-        }
-    ]
+    {
+      "user": "defaultUser",
+      "timestamp": 1757489968022,
+      "version": "sa71n954j5"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757489834286,
+      "version": "u39e1323kr"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757489800441,
+      "version": "u39e1323kr"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757487748088,
+      "version": "gans4d5ako"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757487682079,
+      "version": "48xc7h90he"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757486579193,
+      "version": "gans4d5ako"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757429804544,
+      "version": "k04egmznr9"
+    }
+  ]
 }
