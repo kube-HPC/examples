@@ -11,10 +11,10 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the service code
-COPY ws-mock-service.py .
+COPY ws-service.py .
 
-# Expose port (matches default in ws-mock-service.py)
+# Expose port (matches default in ws-service.py)
 EXPOSE 5000
 
 # HKube calls start(), so we just launch the script
-CMD ["python", "ws-mock-service.py"]
+CMD ["python", "ws-service.py"]

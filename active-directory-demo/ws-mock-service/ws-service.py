@@ -12,7 +12,7 @@ def notify(ws):
         msg = ws.receive()
         if msg is None:  # connection closed
             break
-        print(f"[MOCK WS] Notification: {msg}", flush=True)
+        print(f"[WS] Notification: {msg}", flush=True)
         ws.send(f"ACK: {msg}")
 
 def start(args=None, hkube_api=None):

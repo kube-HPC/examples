@@ -16,7 +16,7 @@
     {
       "container": {
         "name": "ws-mock-service",
-        "image": "hkubedevtest/ws-mock-service:v68votvzy"
+        "image": "hkubedevtest/ws-service:yuut9wlmu"
       },
       "environments": {
         "MOCK_PORT": "5000"
@@ -48,19 +48,64 @@
   "type": "Code",
   "fileInfo": {
     "fileExt": "gz",
-    "checksum": "6c480cbe69325866f6b00c1a5e66073e5c023435",
-    "fileSize": 1423,
-    "path": "dev1-spot-hkube-builds/node3-send-mail-9azb1c"
+    "checksum": "df7408d1812b52b1f6801a15e7f337066c58764a",
+    "fileSize": 1433,
+    "path": "dev1-spot-hkube-builds/node3-send-mail-bi09xt"
   },
-  "algorithmImage": "docker.io/hkubedevtest/node3-send-mail:vj68thel1",
-  "version": "dla379a5nx",
+  "algorithmImage": "docker.io/hkubedevtest/node3-send-mail:vlw3s0qxv",
+  "version": "eh9xrls3a9",
   "created": 1757400847173,
-  "modified": 1757432493317,
+  "modified": 1757494783237,
   "auditTrail": [
     {
       "user": "defaultUser",
-      "timestamp": 1757432493317,
-      "version": "dla379a5nx"
+      "timestamp": 1757494783237,
+      "version": "eh9xrls3a9"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757494622199,
+      "version": "fiwvf1q8in"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757494615172,
+      "version": "fiwvf1q8in"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757492809871,
+      "version": "iwnibv6n7x"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757492192399,
+      "version": "hefaitq0aa"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757492065109,
+      "version": "ie4aud981r"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757492016258,
+      "version": "c4we4x8kqs"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757490969848,
+      "version": "c4mf786gxm"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757489779604,
+      "version": "vyo1mwxg0w"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757486601531,
+      "version": "61bcaxy9ij"
     },
     {
       "user": "defaultUser",

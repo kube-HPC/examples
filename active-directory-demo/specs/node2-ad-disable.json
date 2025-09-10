@@ -16,7 +16,7 @@
     {
       "container": {
         "name": "ws-mock-service",
-        "image": "hkubedevtest/ws-mock-service:v68votvzy"
+        "image": "hkubedevtest/ws-service:yuut9wlmu"
       },
       "environments": {
         "MOCK_PORT": "5000"
@@ -33,24 +33,64 @@
   "type": "Code",
   "fileInfo": {
     "fileExt": "gz",
-    "checksum": "7037b8e714ce1bd0a07f7b76aefed14893d80bf6",
-    "fileSize": 1540,
-    "path": "dev1-spot-hkube-builds/node2-ad-disable-g9ngfs"
+    "checksum": "ce84df732f4587a28ce0d69605db8b5610e86644",
+    "fileSize": 1537,
+    "path": "dev1-spot-hkube-builds/node2-ad-disable-az272w"
   },
-  "algorithmImage": "docker.io/hkubedevtest/node2-ad-disable:votkpmb3u",
+  "algorithmImage": "docker.io/hkubedevtest/node2-ad-disable:vld6bveu5",
+  "version": "0uefnfp2k1",
+  "created": 1757429804544,
+  "modified": 1757494795540,
   "auditTrail": [
     {
       "user": "defaultUser",
-      "timestamp": 1757432487146,
-      "version": "abmx5k4stb"
+      "timestamp": 1757494795540,
+      "version": "0uefnfp2k1"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757494588052,
+      "version": "k3ivrm2aj8"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757490955161,
+      "version": "qb2wxm6fa0"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757489968022,
+      "version": "sa71n954j5"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757489834286,
+      "version": "u39e1323kr"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757489800441,
+      "version": "u39e1323kr"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757487748088,
+      "version": "gans4d5ako"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757487682079,
+      "version": "48xc7h90he"
+    },
+    {
+      "user": "defaultUser",
+      "timestamp": 1757486579193,
+      "version": "gans4d5ako"
     },
     {
       "user": "defaultUser",
       "timestamp": 1757429804544,
       "version": "k04egmznr9"
     }
-  ],
-  "version": "abmx5k4stb",
-  "created": 1757429804544,
-  "modified": 1757432487146
+  ]
 }

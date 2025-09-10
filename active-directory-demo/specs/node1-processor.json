@@ -24,8 +24,13 @@
   "algorithmImage": "docker.io/hkubedevtest/node1-processor:vzyyr1uuy",
   "version": "jbur7pnhkc",
   "created": 1757400660025,
-  "modified": 1757427610713,
+  "modified": 1757494806269,
   "auditTrail": [
+    {
+      "user": "defaultUser",
+      "timestamp": 1757494806269,
+      "version": "jbur7pnhkc"
+    },
     {
       "user": "defaultUser",
       "timestamp": 1757427610713,
