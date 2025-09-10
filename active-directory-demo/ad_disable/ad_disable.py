@@ -27,6 +27,7 @@ def _notify_external(event_type, payload):
 
         try:
             ack = ws.recv()
+            print(f"[notify] Notification Sent")
         except Exception as e:
             print(f"Exception caught: {e}")
             ack = None
@@ -34,7 +35,6 @@ def _notify_external(event_type, payload):
         finally:
             ws.close()
 
-        print(f"[notify] Notification Sent")
         return ack
     except Exception as e:
         print(f"[notify] error: {e}")
