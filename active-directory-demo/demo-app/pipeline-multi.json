@@ -1,0 +1,19 @@
+{
+  "name": "nsoc-mvp",
+  "flowInput": {
+    "users": [
+      {
+        "user": "user2",
+        "email": "user2@example.com",
+        "case": "case#100",
+        "activity_description": "suspicious login attempts"
+      },
+      {
+        "user": "user4",
+        "email": "user4@example.com",
+        "case": "case#101",
+        "activity_description": "requested password reset"
+      }
+    ]
+  }
+}

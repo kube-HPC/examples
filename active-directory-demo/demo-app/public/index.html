@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DEMO MVP</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2em;
+      background: #181a20;
+      color: #eaeaea;
+    }
+    button {
+      margin: 0.5em;
+      background: #222;
+      color: #eaeaea;
+      border: 1px solid #444;
+      border-radius: 4px;
+      padding: 0.5em 1em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #333;
+    }
+    pre {
+      background: #23272f;
+      color: #eaeaea;
+      padding: 1em;
+      border-radius: 5px;
+      border: 1px solid #333;
+    }
+    #graph-blocks div {
+      color: #181a20;
+      font-weight: bold;
+    }
+    #graph-blocks div[style*="background:#0074D9"] { color: #fff; }
+    #graph-blocks div[style*="background:#2ECC40"] { color: #fff; }
+    #graph-blocks div[style*="background:#FF4136"] { color: #fff; }
+    #graph-blocks div[style*="background:#FF851B"] { color: #fff; }
+    #graph-blocks div[style*="background:#FFDC00"] { color: #222; }
+  </style>
+</head>
+<body>
+  <h1>DEMO MVP</h1>
+  <div id="pipelines"></div>
+  <div id="status"></div>
+  <div id="graph"></div>
+  <div id="results"></div>
+  <script>
+    async function fetchPipelines() {
+      const res = await fetch('/api/pipelines');
+      const pipelines = await res.json();
+      const container = document.getElementById('pipelines');
+      container.innerHTML = '<h2>Select a pipeline:</h2>';
+      pipelines.forEach((name, idx) => {
+        const btn = document.createElement('button');
+        btn.textContent = idx === 0 ? 'Multiple Users' : 'Single User';
+        btn.onclick = () => runPipeline(name);
+        container.appendChild(btn);
+      });
+    }
+
+    async function runPipeline(name) {
+      // Clear previous session output
+      document.getElementById('status').innerHTML = '';
+      document.getElementById('graph').innerHTML = '';
+      document.getElementById('results').innerHTML = '';
+      document.getElementById('status').innerHTML = '<em>Running pipeline...</em>';
+      const res = await fetch(`/api/pipeline/${name}`);
+      const body = await res.json();
+      const runRes = await fetch('/api/run', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const runData = await runRes.json();
+      if (!runData.jobId) {
+        document.getElementById('status').innerHTML = '<b>Error:</b> No jobId returned.';
+        return;
+      }
+      pollStatus(runData.jobId);
+    }
+
+    async function pollStatus(jobId) {
+      let finished = false;
+      let statusDiv = document.getElementById('status');
+      let graphDiv = document.getElementById('graph');
+      let resultsDiv = document.getElementById('results');
+      statusDiv.innerHTML = `<b>Job ID:</b> <span id="jobid-value">${jobId}</span> <button id="copy-jobid" style="margin-left:8px;padding:2px 8px;font-size:0.9em;">Copy</button><br><em>Polling status...</em>`;
+      document.getElementById('copy-jobid').onclick = function() {
+        const jobIdText = document.getElementById('jobid-value').textContent;
+        navigator.clipboard.writeText(jobIdText);
+        this.textContent = 'Copied!';
+        setTimeout(() => { this.textContent = 'Copy'; }, 1200);
+      };
+      let graphBlocksRendered = false;
+      while (!finished) {
+        // Poll job status
+        const res = await fetch(`/api/status/${jobId}`);
+        const data = await res.json();
+        let statusColor = '#eaeaea';
+        if (data.status === 'completed') statusColor = '#2ECC40';
+        if (data.status === 'active') statusColor = '#0074D9';
+        statusDiv.innerHTML = `<b>Job ID:</b> <span id="jobid-value">${jobId}</span> <button id="copy-jobid" style="margin-left:8px;padding:2px 8px;font-size:0.9em;">Copy</button><br><b>Status:</b> <span style="color:${statusColor}">${data.status}</span><br>`;
+        document.getElementById('copy-jobid').onclick = function() {
+          const jobIdText = document.getElementById('jobid-value').textContent;
+          navigator.clipboard.writeText(jobIdText);
+          this.textContent = 'Copied!';
+          setTimeout(() => { this.textContent = 'Copy'; }, 1200);
+        };
+        if (data.data && data.data.details) {
+          statusDiv.innerHTML += `<pre>${JSON.stringify(data.data.details, null, 2)}</pre>`;
+        }
+
+        // Poll graph and render block diagram only once, then update statuses
+        try {
+          const graphRes = await fetch(`/api/graph/${jobId}`);
+          const graph = await graphRes.json();
+          if (!graphBlocksRendered) {
+            graphDiv.innerHTML = renderGraphDiagram(graph);
+            graphBlocksRendered = true;
+          }
+          updateNodeStatuses(graph);
+        } catch (err) {
+          graphDiv.innerHTML = `<div style="color:red">Error fetching graph: ${err}</div>`;
+        }
+
+        if (data.status === 'completed' || data.status === 'failed') {
+          finished = true;
+          statusDiv.innerHTML += '<em>Job finished. Fetching results...</em>';
+          const resRes = await fetch(`/api/results/${jobId}`);
+          const results = await resRes.json();
+          resultsDiv.innerHTML = `<h3>Pipeline Result:</h3>${formatNotifyAcks(results)}`;
+        } else {
+          await new Promise(r => setTimeout(r, 1000));
+        }
+      }
+    }
+
+    // Format notify_ack fields from results for readability
+    function formatNotifyAcks(results) {
+      let notifyAcks = [];
+      // Try to find notify_ack fields in results
+      if (results && results.data && Array.isArray(results.data)) {
+        results.data.forEach(node => {
+          if (node.result && Array.isArray(node.result)) {
+            node.result.forEach(r => {
+              if (r.notify_ack) {
+                // Try to extract and pretty-print the JSON part
+                const match = r.notify_ack.match(/ACK: (\{.*\})$/);
+                let parsed = r.notify_ack;
+                if (match && match[1]) {
+                  try {
+                    parsed = '<pre>' + JSON.stringify(JSON.parse(match[1]), null, 2) + '</pre>';
+                  } catch {}
+                }
+                notifyAcks.push(parsed);
+              }
+            });
+          }
+        });
+      }
+      if (notifyAcks.length === 0) return '<em>No pipeline result found.</em>';
+      return notifyAcks.map(a => `<div>${a}</div>`).join('');
+    }
+
+    // Get node status, fallback to latest batch status if missing
+    function getNodeStatus(node) {
+      if (node.status) return node.status;
+      if (node.batch && node.batch.length) {
+        // Get the most recent batch status
+        const lastBatch = node.batch[node.batch.length - 1];
+        return lastBatch.status || 'N/A';
+      }
+      return 'N/A';
+    }
+
+    // Update only the status text inside each block to reduce flicker
+    function updateNodeStatuses(graph) {
+      if (!graph || !graph.nodes) return;
+      graph.nodes.forEach(node => {
+        const statusSpan = document.getElementById(`status-${node.nodeName}`);
+        const blockDiv = document.getElementById(`node-${node.nodeName}`);
+        const status = getNodeStatus(node);
+        if (statusSpan) {
+          statusSpan.innerHTML = `Status: <b>${status}</b>`;
+        }
+        if (blockDiv) {
+          let bgColor = '#fafafa';
+          if (status === 'active') bgColor = '#0074D9';
+          if (status === 'succeed') bgColor = '#2ECC40';
+          if (status === 'creating') bgColor = '#FFDC00';
+          if (status === 'preschedule') bgColor = '#FF851B';
+          if (status === 'failed') bgColor = '#FF4136';
+          blockDiv.style.background = bgColor;
+        }
+      });
+    }
+
+    // Render a simple block diagram of nodes and edges
+    function renderGraphDiagram(graph) {
+      if (!graph || !graph.nodes) return '';
+      // Assign each node a horizontal position
+      const nodePositions = {};
+      const blockWidth = 140, blockHeight = 100, gap = 120;
+      let html = '<h3>Pipeline Graph</h3>';
+      html += `<div id="graph-blocks" style="position:relative;height:${blockHeight+40}px;">`;
+      graph.nodes.forEach((node, i) => {
+        const left = i * (blockWidth + gap);
+        nodePositions[node.nodeName] = { left, top: 20 };
+        const status = getNodeStatus(node);
+        let bgColor = '#fafafa';
+        if (status === 'active') bgColor = '#0074D9';
+        if (status === 'succeed') bgColor = '#2ECC40';
+        if (status === 'creating') bgColor = '#FFDC00';
+        if (status === 'preschedule') bgColor = '#FF851B';
+        if (status === 'failed') bgColor = '#FF4136';
+        html += `<div id="node-${node.nodeName}" style="position:absolute;left:${left}px;top:20px;width:${blockWidth}px;height:${blockHeight}px;border:2px solid #333;padding:1em;border-radius:8px;text-align:center;background:${bgColor};transition:background 0.3s;">
+          <b>${node.nodeName}</b><br>
+          <span id="status-${node.nodeName}">Status: <b>${status}</b></span>
+        </div>`;
+      });
+      // SVG for edges
+      html += `<svg id="graph-svg" style="position:absolute;top:0;left:0;width:100%;height:${blockHeight+40}px;pointer-events:none;">
+`;
+      if (graph.edges && graph.edges.length) {
+        graph.edges.forEach(e => {
+          const from = nodePositions[e.from], to = nodePositions[e.to];
+          if (from && to) {
+            // Arrow starts exactly at the right edge of 'from', ends at the left edge of 'to'
+            const x1 = from.left + blockWidth, y1 = from.top + blockHeight/2;
+            const x2 = to.left, y2 = to.top + blockHeight/2;
+            html += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#0074D9" stroke-width="3" marker-end="url(#arrowhead)" />`;
+          }
+        });
+        // Arrowhead marker
+        html += `<defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#0074D9"/></marker></defs>`;
+      }
+      html += '</svg>';
+      html += '</div>';
+      return html;
+    }
+
+    fetchPipelines();
+  </script>
+</body>
+</html>
