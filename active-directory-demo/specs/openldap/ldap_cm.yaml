@@ -1,0 +1,123 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ldap-bootstrap
+  namespace: ldap
+data:
+  users.ldif: |
+    dn: dc=example,dc=org
+    objectClass: top
+    objectClass: dcObject
+    objectClass: organization
+    o: Example Org
+    dc: example
+
+    dn: ou=People,dc=example,dc=org
+    objectClass: organizationalUnit
+    ou: People
+
+    # Preloaded users
+    dn: uid=user1,ou=People,dc=example,dc=org
+    objectClass: inetOrgPerson
+    cn: User One
+    sn: One
+    uid: user1
+    userPassword: password1
+
+    dn: uid=user2,ou=People,dc=example,dc=org
+    objectClass: inetOrgPerson
+    cn: User Two
+    sn: Two
+    uid: user2
+    userPassword: password2
+
+    dn: uid=user3,ou=People,dc=example,dc=org
+    objectClass: inetOrgPerson
+    cn: User Three
+    sn: Three
+    uid: user3
+    userPassword: password3
+
+    dn: uid=user4,ou=People,dc=example,dc=org
+    objectClass: inetOrgPerson
+    cn: User Four
+    sn: Four
+    uid: user4
+    userPassword: password4
+
+    dn: uid=user5,ou=People,dc=example,dc=org
+    objectClass: inetOrgPerson
+    cn: User Five
+    sn: Five
+    uid: user5
+    userPassword: password5
+
+    dn: uid=user6,ou=People,dc=example,dc=org
+    objectClass: inetOrgPerson
+    cn: User Six
+    sn: Six
+    uid: user6
+    userPassword: password6
+
+    dn: uid=user7,ou=People,dc=example,dc=org
+    objectClass: inetOrgPerson
+    cn: User Seven
+    sn: Seven
+    uid: user7
+    userPassword: password7
+
+    dn: uid=user8,ou=People,dc=example,dc=org
+    objectClass: inetOrgPerson
+    cn: User Eight
+    sn: Eight
+    uid: user8
+    userPassword: password8
+
+    dn: uid=user9,ou=People,dc=example,dc=org
+    objectClass: inetOrgPerson
+    cn: User Nine
+    sn: Nine
+    uid: user9
+    userPassword: password9
+
+    dn: uid=user10,ou=People,dc=example,dc=org
+    objectClass: inetOrgPerson
+    cn: User Ten
+    sn: Ten
+    uid: user10
+    userPassword: password10
+
+    dn: uid=user11,ou=People,dc=example,dc=org
+    objectClass: inetOrgPerson
+    cn: User Eleven
+    sn: Eleven
+    uid: user11
+    userPassword: password11
+
+    dn: uid=user12,ou=People,dc=example,dc=org
+    objectClass: inetOrgPerson
+    cn: User Twelve
+    sn: Twelve
+    uid: user12
+    userPassword: password12
+
+    dn: uid=user13,ou=People,dc=example,dc=org
+    objectClass: inetOrgPerson
+    cn: User Thirteen
+    sn: Thirteen
+    uid: user13
+    userPassword: password13
+
+    dn: uid=user14,ou=People,dc=example,dc=org
+    objectClass: inetOrgPerson
+    cn: User Fourteen
+    sn: Fourteen
+    uid: user14
+    userPassword: password14
+
+    dn: uid=user15,ou=People,dc=example,dc=org
+    objectClass: inetOrgPerson
+    cn: User Fifteen
+    sn: Fifteen
+    uid: user15
+    userPassword: password15

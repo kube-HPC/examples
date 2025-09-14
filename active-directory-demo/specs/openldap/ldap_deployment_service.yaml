@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openldap
+  namespace: ldap
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: openldap
+  template:
+    metadata:
+      labels:
+        app: openldap
+    spec:
+      containers:
+        - name: openldap
+          image: bitnami/openldap:2.6.9-debian-12-r9
+          ports:
+            - containerPort: 389
+              name: ldap
+          env:
+            - name: LDAP_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ldap-admin-secret
+                  key: LDAP_ADMIN_PASSWORD
+            - name: LDAP_BASE_DN
+              value: "dc=example,dc=org"
+            - name: LDAP_TLS
+              value: "no"
+          volumeMounts:
+            - name: ldap-users
+              mountPath: /docker-entrypoint-initdb.d
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - /bin/sh
+                  - -c
+                  - |
+                    echo "Waiting for LDAP to be ready..."
+                    until ldapsearch -x -H ldap://localhost:1389 -D "cn=admin,${LDAP_BASE_DN}" -w "$LDAP_ADMIN_PASSWORD" -b "${LDAP_BASE_DN}" >/dev/null 2>&1; do
+                      sleep 2
+                    done
+                    echo "Seeding LDAP users..."
+                    ldapadd -x -c -H ldap://localhost:1389 \
+                      -D "cn=admin,${LDAP_BASE_DN}" \
+                      -w "$LDAP_ADMIN_PASSWORD" \
+                      -f /docker-entrypoint-initdb.d/users.ldif || true
+      volumes:
+        - name: ldap-users
+          configMap:
+            name: ldap-bootstrap
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ldap-service
+  namespace: ldap
+spec:
+  selector:
+    app: openldap
+  ports:
+    - protocol: TCP
+      port: 389
+      targetPort: 389
