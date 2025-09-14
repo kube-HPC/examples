@@ -1,3 +1,25 @@
+## Debugging OpenLDAP
+
+To inspect and debug the LDAP server, you can use the following commands:
+
+### Start an LDAP Debug Pod
+
+```bash
+kubectl run ldap-debug --rm -it --image=bitnami/openldap:2.6.9-debian-12-r9 --env LDAP_ADMIN_PASSWORD=<passwordFromSecret> -- bash
+```
+
+This will start a temporary pod with an interactive shell and the correct LDAP tools.
+
+### Search LDAP Entries
+
+Inside the debug pod, run:
+
+```bash
+ldapsearch -x -H ldap://<LDAP_URI>:389 -D "cn=admin,dc=example,dc=org" -w "$LDAP_ADMIN_PASSWORD" -b "ou=People,dc=example,dc=org" "(uid=user2)" uid cn userPassword pwdAccountLockedTime
+```
+
+Replace `<LDAP_URI>` and credentials as needed.  
+This command will show details for the user with `uid=user2`.
 # Active Directory Demo Pipeline
 
 This example demonstrates a pipeline for handling Active Directory (AD) users.  
@@ -16,24 +38,72 @@ input_processor --> ad_disable --> send_mail
 * `ad_disable/` – Node 2: Disables AD accounts via LDAP and sends notifications.
 * `send_mail/` – Node 3: Sends email via SMTP (MailHog) and notifies via WebSocket.
 * `ws-service/` – WebSocket service for notifications.
-* `specs/` – Specifications for each algorithm and pipeline in HKube.
+* `specs/` – Specifications for each algorithm and pipeline in HKube:
+  * `node1-processor.json` – Input processor node spec
+  * `node2-ad-disable.json` – AD disable node spec
+  * `node3-send-mail.json` – Send mail node spec
+  * `demo-mvp.json` – Example pipeline spec
+  * `mailhog/` – Mailhog deployment YAMLs:
+    * `mailhog_namespace.yaml`
+    * `mailhog_deployment.yaml`
+    * `mailhog_service.yaml`
+  * `openldap/` – OpenLDAP deployment YAMLs:
+    * `ldap_cm.yaml`
+    * `ldap_deployment_service.yaml`
+    * `ldap_secret.yaml`
+
+## Running the Demo App
+
+A Node.js demo application is provided in the `demo-app/` folder. This app allows you to interact with the pipeline, trigger executions, and view results via a simple web interface.
+
+
+### Setup & Usage
+
+```bash
+cd demo-app
+npm install
+node server.js
+```
+
+The app will start on [http://localhost:3000](http://localhost:3000).
+
+**Purpose:**  
+The demo app provides endpoints to trigger pipeline runs, check job status, and view parsed job graphs. It is useful for testing and visualizing pipeline executions without using the HKube UI directly.
 
 ## Running the Pipeline
 
 ### Prerequisites
 
-* Kubernetes cluster with LDAP deployed in the `ldap` namespace.
-* Running MailHog pod and service (for SMTP simulation) in the `mailhog` namespace.
+* Kubernetes cluster
+* Access to deploy services in the cluster
+* OpenLDAP deployed in the `ldap` namespace (see instructions below)
+* MailHog pod and service (for SMTP simulation) in the `mailhog` namespace (see instructions below)
+
 
 ### Creating MailHog Pod & Service
 
-Inside `/specs`, deploy the provided YAMLs:
+Inside `/specs/mailhog`, deploy the provided YAMLs:
 
 ```bash
-kubectl apply -f mailhog_namespace.yaml
-kubectl apply -f mailhog_deployment.yaml
-kubectl apply -f mailhog_service.yaml
+kubectl apply -f mailhog/mailhog_namespace.yaml
+kubectl apply -f mailhog/mailhog_deployment.yaml
+kubectl apply -f mailhog/mailhog_service.yaml
 ```
+
+This will deploy Mailhog in the `mailhog` namespace.
+
+### Creating LDAP Pod & Service
+
+Inside `/specs/openldap`, deploy the provided YAMLs:
+
+```bash
+kubectl apply -f openldap/ldap_namespace.yaml
+kubectl apply -f openldap/ldap_cm.yaml
+kubectl apply -f openldap/ldap_secret.yaml
+kubectl apply -f openldap/ldap_deployment_service.yaml
+```
+
+This will create the `ldap` namespace and deploy an OpenLDAP server with preloaded users in it.
 
 ### Determining the Cluster Domain
 

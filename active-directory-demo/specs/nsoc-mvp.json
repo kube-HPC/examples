@@ -1,5 +1,5 @@
 {
-    "name": "nsoc-mvp",
+    "name": "demo-mvp",
     "kind": "batch",
     "flowInput": {
         "users": [
