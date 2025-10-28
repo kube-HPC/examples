@@ -5,7 +5,7 @@ To inspect and debug the LDAP server, you can use the following commands:
 ### Start an LDAP Debug Pod
 
 ```bash
-kubectl run ldap-debug --rm -it --image=bitnami/openldap:2.6.9-debian-12-r9 --env LDAP_ADMIN_PASSWORD=<passwordFromSecret> -- bash
+kubectl run ldap-debug --rm -it --image=bitnamilegacy/openldap:2.6.9-debian-12-r9 --env LDAP_ADMIN_PASSWORD=<passwordFromSecret> -- bash
 ```
 
 This will start a temporary pod with an interactive shell and the correct LDAP tools.
